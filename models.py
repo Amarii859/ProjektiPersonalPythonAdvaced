@@ -1,4 +1,4 @@
-from projekt.database import cursor, conn
+from database import cursor, conn
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS students (

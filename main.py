@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from projekt.crud import get_students
+from crud import get_students
 
 app = FastAPI()
 
