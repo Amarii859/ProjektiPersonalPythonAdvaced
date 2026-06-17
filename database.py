@@ -1,6 +1,10 @@
 import sqlite3
+import os
 
-conn = sqlite3.connect("school.db", check_same_thread=False)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "school.db")
+
+conn = sqlite3.connect(DB_PATH, check_same_thread=False)
 cursor = conn.cursor()
 
 cursor.execute("""
@@ -15,3 +19,4 @@ CREATE TABLE IF NOT EXISTS students (
 
 conn.commit()
 
+print("USING DATABASE:", DB_PATH)

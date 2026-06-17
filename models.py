@@ -1,23 +1,40 @@
-from database import cursor, conn
+# models.py
+import sqlite3
+import os
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS students (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    surname TEXT,
-    class TEXT,
-    age INTEGER
-)
-""")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "school.db")
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS teachers (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    surname TEXT,
-    subject TEXT,
-    age INTEGER
-)
-""")
 
-conn.commit()
+def get_connection():
+    return sqlite3.connect(DB_PATH, check_same_thread=False)
+
+
+def create_tables():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    # Students table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS students (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        surname TEXT NOT NULL,
+        class_name TEXT NOT NULL,
+        age INTEGER NOT NULL
+    )
+    """)
+
+    # Teachers table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS teachers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        surname TEXT NOT NULL,
+        subject TEXT NOT NULL,
+        age INTEGER NOT NULL
+    )
+    """)
+
+    conn.commit()
+    conn.close()
